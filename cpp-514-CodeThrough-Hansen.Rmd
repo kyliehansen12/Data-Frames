@@ -1,0 +1,171 @@
+---
+title: "Using gather() and spread() Functions in R"
+author: "Kylie Hansen"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document:
+    theme: readable
+    df_print: paged
+    highlight: tango
+    toc: yes
+    toc_float: yes
+---
+
+<br>
+
+# Introduction:
+
+Messy data can result in inaccuracies, missing data, and/or data being stored in an inacessible way. In order to ensure data is "clean" - i.e. accurate and easy to use, the "Tidyverse" function exists with functions like **gather()** and **spread()** to help.
+
+For this assignment, we will explore the **gather()** and **spread()** functions to understand how each can be beneficial when you need to reshape your data or adjust the formatting of a data table. When merging data tables, these functions can prove especially helpful to ensuring both datasets have the same formatting. 
+
+<br>
+
+# Prerequisites:
+
+- Basic knowledge of R syntax
+- Familiarity with data frames
+- Ensure you have the **tidyverse package** installed (which includes tidyr).
+
+<br>
+
+# Using gather() and spread() Functions in R
+
+To get started, we will need to load the following packages:
+
+
+```{r}
+
+# LOAD PACKAGES
+
+install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+library(tidyverse)
+```
+
+
+<br>
+
+
+## Understanding Your Existing Data Formatting
+
+In order to understand how to manipulate your data to use it effectively, let's start with creating an easy dataset with several easy sample columns. In this case, we will use student test scores on a recent exam. Our columns include student name, math test score, science test score, and english test score.
+
+<br>
+
+```{r}
+# Create a wide-format data frame
+test_scores <- data.frame(
+  student = c("Kylie", "Emma", "Sarah", "Mary"),
+  math = c(90, 85, 78, 92),
+  science = c(88, 90, 84, 95),
+  english = c(85, 87, 90, 93)
+)
+
+# Print the dataset
+print(test_scores)
+
+```
+
+This dataset has a **wide format** and each subject can be found in a separate column.
+
+<br>
+
+<br>
+
+## Using **gather()** to Reshape Data from Wide to Long Format
+
+The **gather()** function should be used when we need to convert a data table like the one above from wide to long format. Let's try convering the test_scores data frame above into a long format where each subject is a row instead of a column.
+
+```{r}
+# Reshape the data using gather
+test_scores_long <- test_scores %>%
+  gather(key = "subject", value = "score", math, science, english)
+
+# Print the long format data
+print(test_scores_long)
+
+```
+
+A quick breakdown of the above example:
+
+- **key** = **subject:** This specifies that we want a new column named subject that will store the column names (math, science, english).
+- **value** = **score:** This specifies that the corresponding values will be stored in a new column named score.
+- **math, science, english** = These are the columns we want to reshape.
+
+<br>
+
+<br>
+
+## Using **spread()** to Reshape Data from Long to Wide Format
+
+Now, let's learn how to use the **spread()** function. We'll convert the test_scores_long data frame back into its original wide format.
+
+```{r}
+
+# Reshape the data using spread
+test_scores_wide <- test_scores_long %>%
+  spread(key = "subject", value = "score")
+
+# Print the wide format data
+print(test_scores_wide)
+
+
+```
+
+Explanation:
+
+- **key** = **subject:** This is the column that contains the unique values that we want to spread into separate columns (math, science, english).
+- **value** = **score:** This is the column containing the values we want to distribute across the new columns.
+
+<br>
+
+<br>
+
+## Combining **gather()** and **spread()**
+
+When working regularly with the same few datasets, you may need to convert data back and forth between formats. Let's practice using both the **gather()** and **spread()** functions at the same time:
+
+```{r}
+
+# Convert wide to long, then back to wide
+test_scores_long <- test_scores %>%
+  gather(key = "subject", value = "score", math, science, english)
+
+test_scores_wide <- test_scores_long %>%
+  spread(key = "subject", value = "score")
+
+# Print the final wide format data
+print(test_scores_wide)
+
+```
+
+
+<br>
+<br>
+
+# Learn more about data cleaning using the following resources:
+
+<br>
+
+* Tidyr, [Gather columns into key-value pairs](https://tidyr.tidyverse.org/reference/gather.html)
+
+* Dataquest, [Tidyverse Basics: Load and Clean Data with R tidyverse Tools](https://www.dataquest.io/blog/load-clean-data-r-tidyverse/)
+
+
+<br>
+<br>
+
+# Works Cited
+
+This code through references and cites the following sources:
+
+<br>
+
+* Zach Bobbitt (2021). Statology. [How to Use Gather Function in R (With Examples](https://www.statology.org/gather-function-in-r/)
+
+* No Author (2024). GeeksforGeeks. [How to Use Gather Function in R](https://www.geeksforgeeks.org/how-to-use-gather-function-in-r/)
+
+* Michael Harris (2024). SR. [The “spread” Function in R](https://www.statswithr.com/r-functions/the-spread-function-in-r)
+
+<br>
+<br>
