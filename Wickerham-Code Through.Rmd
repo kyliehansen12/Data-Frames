@@ -1,0 +1,189 @@
+---
+title: "Data Frames"
+author: "Kelsey Wickerham"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document:
+    theme: readable
+    df_print: paged
+    highlight: tango
+    toc: yes
+    toc_float: yes
+---
+
+```{r include = FALSE}
+
+# SET GLOBAL KNITR OPTIONS
+
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      fig.width = 10, 
+                      fig.height = 8)
+
+
+# LOAD PACKAGES
+
+library(pander)
+library(kableExtra)
+library(dplyr)
+library(ggplot2)
+```
+
+<br>
+<br>
+
+# Introduction
+
+This code through will provide an overview to constructing data frames in R. Data frames are an 
+essential structure used for data manipulation and analytics. It is made up of rows and columns,
+and unlike matrices, it can contain different data types.
+
+<br>
+
+## Content Overview
+
+In this code through we will specifically review;
+
+1. The key features of a data frame
+
+2. How to create a data frame from vectors
+
+3. Accessing specific information stored in a data frame
+
+
+<br>
+
+## Why You Should Care
+
+As previously mentioned, data frames are a fundamental structure in R. They offer versatility for
+the manipulation and analysis of tabular data. As long as you are programming in R, you are going
+to need to know what a data frame is, how to construct one, and how to access specific data.
+
+
+<br>
+<br>
+
+
+
+# Step 1 - Key Features of a Data Frame
+
+A data frame is made up of rows and columns. Columns represent the variable while rows represent 
+what is observed. Because we typically name our columns in a data frame, it is easy to call upon 
+our variables by their name when accessing specific data later on.
+
+Unlike matrices, which can only contain one data type, a data frame can contain different types 
+of data in the columns. This is important seeing as tabular data will often contain a combination 
+of numeric, character, categorical, and logical data.
+
+<br>
+<br>
+
+# Step 2 - Creating a Data Frame
+
+We will be creating a data frame using information about players in my fantasy football team. 
+This data frame will contain all four data types:
+
+1. Characters - Player name
+2. Categorical Data - Player position
+3. Numeric - Total fantasy points scored this season, average score
+4. Logical - Is the player eligible to play?
+
+Now let's begin!
+
+```{r}
+#Step 1. Create the data frame using the data.frame function. For convention, we will name our 
+#data frame "df".
+#Step 2. Create the player vector and enter your player's names.
+#Step 3. Create the position vector and enter the player positions.
+#Step 4. Create the vector for total fantasy points scored and enter thenumeric data.
+#Step 5. Create the vector for average points scored and enter the numeric data.
+#Step 6. Create the vector identifying if a player is eligible to play. This is a T/F variable.
+
+df <- data.frame(
+  Player = c("Kyler Murray", "Breece Hall", "Puka Nacua", "Kyle Pitts", "Jake Moody"),
+  Position = c("Quarterback", "Running Back", "Wide Receiver", "Tight End", "Kicker"),
+  Total_Fantasy_Points = c(150.7, 68.7, 7.7, 38.0, 71.0),
+  Average_Fantasy_Points = c(30.1, 13.7, 7.7, 7.6, 14.4),
+  Eligible_To_Play = c(TRUE, TRUE, FALSE, TRUE, FALSE)
+  
+)
+
+print(df)
+```
+Helpful tips when creating your data frame:
+
+Column names cannot contain spaces. If a name has multipe words, such as "Total Fantasy Points", 
+you should combine the name using underscores, periods, dashes, or "camel" spelling.
+
+Additionally, make sure you use the equal sign when creating your vectors as opposed to an arrow.
+
+<br>
+<br>
+
+# Step 3 - Accessing Information in a Data Frame
+
+There are a variety of ways that you can access information in a data frame:
+
+1. Accessing Columns by Name
+
+To access a column by name, you can utilize the $ operator. Your code would look something like: 
+   
+   Data_Frame$Column_Name
+
+For example, if I wanted to identify the names of my players, my code would simply be:
+   
+```{r}
+df$Player
+```
+2. Accessing Rows and/or Columns by Position
+
+You can also access information from a row and/or column based off its position in the table. 
+This is achieved by utilizing brackets that contain the row and/or column number you are 
+interested in.
+
+   Data_Frame[Row Number, Column Number] - this will identify a very specific variable. 
+   
+For example, if I wanted to identify Kyler Murray's total fantasy points this season, I would 
+write:
+
+```{r}
+df[1, 3]        #identifies the data in row 1, column 3
+```
+
+Perhaps I want to identify all of the data in row 1. In this case, I would write:
+
+
+```{r}
+df[1, ]          #identifies the data in row 1
+```
+You could also pull in multiple rows by writing:
+
+   
+```{r}
+df[1:3, ]
+```
+
+And finally, if you wanted to identify specific columns - such at the player name and eligibility 
+- you could write:
+   
+```{r}
+df[, c(1, 5)]
+```
+
+
+<br> 
+<br>
+
+# Further Resources
+
+Learn more about [package, technique, dataset] with the following:
+
+<br>
+
+* Resource I [Hyperlink Text](https://www.datacamp.com/tutorial/intro-data-frame-r)
+
+
+
+<br>
+<br>
